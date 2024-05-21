@@ -3,15 +3,7 @@ import Loader from 'react-loader-spinner'
 import CourseDetailsItem from '../CourseDetailsItem'
 import Header from '../Header'
 
-import {
-  CourseDetailsListContainer,
-  ErrorContainer,
-  ErrorImg,
-  ErrorHeading,
-  ErrorInfo,
-  ErrorRetryButton,
-  LoaderContainer,
-} from './styledComponents'
+import './index.css'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -22,7 +14,7 @@ const apiStatusConstants = {
 
 class CourseDetails extends Component {
   state = {
-    courseDetailsList: [],
+    CourseDetailsList: [],
     apiStatus: apiStatusConstants.initial,
   }
 
@@ -35,23 +27,24 @@ class CourseDetails extends Component {
   }
 
   renderFailureView = () => (
-    <ErrorContainer>
-      <ErrorImg
+    <div className="errorContainer">
+      <img
+        className="errorImg"
         src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png"
         alt="failure view"
       />
-      <ErrorHeading>Oops! Something Went Wrong</ErrorHeading>
-      <ErrorInfo>
+      <h1 className="errorHeading">Oops! Something Went Wrong</h1>
+      <p className="errorInfo">
         We cannot seem to find the page you are looking for.
-      </ErrorInfo>
-      <ErrorRetryButton
+      </p>
+      <button
+        className="errorRetryButton"
         type="button"
-        className="retry-button"
         onClick={this.onClickRetry}
       >
         Retry
-      </ErrorRetryButton>
-    </ErrorContainer>
+      </button>
+    </div>
   )
 
   getCourseDetails = async () => {
@@ -75,7 +68,7 @@ class CourseDetails extends Component {
         description: each.description,
       }))
       this.setState({
-        courseDetailsList: updatedData,
+        CourseDetailsList: updatedData,
         apiStatus: apiStatusConstants.success,
       })
     } else {
@@ -86,21 +79,21 @@ class CourseDetails extends Component {
   }
 
   renderCourseDetailsView = () => {
-    const {courseDetailsList} = this.state
+    const {CourseDetailsList} = this.state
 
     return (
-      <CourseDetailsListContainer>
-        {courseDetailsList.map(each => (
+      <ul className="courseDetailsListContainer">
+        {CourseDetailsList.map(each => (
           <CourseDetailsItem key={each.id} courseItemDetails={each} />
         ))}
-      </CourseDetailsListContainer>
+      </ul>
     )
   }
 
   renderLoader = () => (
-    <LoaderContainer data-testid="loader">
+    <div className="loaderContainer" data-testid="loader">
       <Loader type="ThreeDots" color="#00BFFF" height={50} width={50} />
-    </LoaderContainer>
+    </div>
   )
 
   renderCourseDetails = () => {
@@ -127,4 +120,5 @@ class CourseDetails extends Component {
     )
   }
 }
+
 export default CourseDetails

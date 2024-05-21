@@ -2,19 +2,7 @@ import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import CourseItem from '../CourseItem'
 import Header from '../Header'
-
-import {
-  BgContainer,
-  ErrorContainer,
-  ErrorImg,
-  ErrorHeading,
-  ErrorInfo,
-  ErrorRetryButton,
-  CourseItemsList,
-  CoursesListContainer,
-  Heading,
-  LoaderContainer,
-} from './styledComponents'
+import './index.css'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -65,48 +53,50 @@ class Home extends Component {
   }
 
   renderFailureView = () => (
-    <ErrorContainer>
-      <ErrorImg
+    <div className="errorContainer">
+      <img
+        className="errorImg"
         src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png"
         alt="failure view"
       />
-      <ErrorHeading>Oops! Something Went Wrong</ErrorHeading>
-      <ErrorInfo>
+      <h1 className="errorHeading">Oops! Something Went Wrong</h1>
+      <p className="errorInfo">
         We cannot seem to find the page you are looking for.
-      </ErrorInfo>
-      <ErrorRetryButton
+      </p>
+      <button
         type="button"
-        className="retry-button"
+        className="errorRetryButton"
         onClick={this.onClickRetry}
       >
         Retry
-      </ErrorRetryButton>
-    </ErrorContainer>
+      </button>
+    </div>
   )
 
   renderCoursesList = () => {
     const {courseList} = this.state
 
     return (
-      <CoursesListContainer>
-        <Heading>Courses</Heading>
-        <CourseItemsList>
+      <div className="coursesListContainer">
+        <h1 className="heading">Courses</h1>
+        <ul className="courseItemsList">
           {courseList.map(each => (
             <CourseItem key={each.id} courseItemDetails={each} />
           ))}
-        </CourseItemsList>
-      </CoursesListContainer>
+        </ul>
+      </div>
     )
   }
 
   renderLoader = () => (
-    <LoaderContainer data-testid="loader">
+    <div className="loaderContainer" data-testid="loader">
       <Loader type="ThreeDots" color="#00BFFF" height={50} width={50} />
-    </LoaderContainer>
+    </div>
   )
 
   renderCourses = () => {
     const {apiStatus} = this.state
+
     switch (apiStatus) {
       case apiStatusConstants.success:
         return this.renderCoursesList()
@@ -121,10 +111,10 @@ class Home extends Component {
 
   render() {
     return (
-      <BgContainer>
+      <div className="bgContainer">
         <Header />
         {this.renderCourses()}
-      </BgContainer>
+      </div>
     )
   }
 }
